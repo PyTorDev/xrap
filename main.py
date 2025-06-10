@@ -3,6 +3,9 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.prompt import Prompt
 from rich import box
+from rich.markdown import Markdown
+
+from pathlib import Path
 
 console = Console()
 
@@ -28,6 +31,14 @@ def show_menu():
     table.add_row("2", "Ver instrucciónes")
     console.print(table)
 
+def show_instructions():
+    path = Path("instructions.md")
+    if path.exists():
+        markdown = Markdown(path.read_text(encoding="utf-8"))
+        console.print(markdown)
+    else:
+        console.print("[bold red]El archivo de instrucciones no se encontró.[/bold red]")
+
 def main():
     while True:
         console.clear()
@@ -39,8 +50,9 @@ def main():
             console.print("[bold green]Iniciando el simulador...[/bold green]")
             break
         elif choice == "2":
-            console.print("[bold green]Mostrando instrucciones...[/bold green]")
-            break
+            console.print("[bold green]Mostrando instrucciones...[/bold green]\n")
+            show_instructions()
+            input("\nPresiona ENTER para continuar...")
 
 if __name__ == "__main__":
     main()
