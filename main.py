@@ -7,6 +7,8 @@ from rich.markdown import Markdown
 
 from pathlib import Path
 
+from core.runtime import check_get_dependencies
+
 console = Console()
 
 def show_header():
@@ -29,6 +31,7 @@ def show_menu():
     table.add_column("Descripción", style="bold white")
     table.add_row("1", "Iniciar Simulador")
     table.add_row("2", "Ver instrucciónes")
+    table.add_row("3", "Salir")
     console.print(table)
 
 def show_instructions():
@@ -44,15 +47,18 @@ def main():
         console.clear()
         show_header()
         show_menu()
-        choice = Prompt.ask("\n[bold cyan]Selecciona una opción[/bold cyan]", choices=["1", "2"])
+        choice = Prompt.ask("\n[bold cyan]Selecciona una opción[/bold cyan]", choices=["1", "2", "3"])
 
         if choice == "1":
-            console.print("[bold green]Iniciando el simulador...[/bold green]")
-            break
+            check_get_dependencies()
         elif choice == "2":
             console.print("[bold green]Mostrando instrucciones...[/bold green]\n")
             show_instructions()
             input("\nPresiona ENTER para continuar...")
+        elif choice == "3":
+            console.print("[bold yellow]Saliendo...[/bold yellow]")
+            break
 
 if __name__ == "__main__":
     main()
+1
